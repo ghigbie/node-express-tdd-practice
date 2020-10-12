@@ -1,11 +1,8 @@
 const TodoModel = require('../model/todo.model');
 
 
-const createTodo = (title = "Walk dog", done = "false") => {
-    return TodoModel.create({
-        title,
-        done
-    });
+const createTodo = (req, res, next) => {
+    TodoModel.create(req.body);
 }
 
 module.exports = {createTodo}
