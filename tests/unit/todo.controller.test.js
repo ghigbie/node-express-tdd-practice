@@ -11,6 +11,9 @@ beforeEach(() => {
     req = httpMocks.createRequest();
     res = httpMocks.createResponse();
     next = null;
+
+    req.body = newTodo;
+    TodoController.createTodo(req, res, next);
 })
 
 describe("TodoController.createTodo", () => {
@@ -21,8 +24,10 @@ describe("TodoController.createTodo", () => {
     });
 
     it('should call TodoModel.create with the correct provided value', () => {
-        req.body = newTodo;
-        TodoController.createTodo(req.body);
-        expect(TodoModel.create).toBeCalled();
+        expect(TodoModel.create).toBeCalledWith(newTodo);
+    })
+
+    it('should return a 201 status call for a successful request', () => {
+        expect(res.statusCode).toBe(201);
     })
 })
